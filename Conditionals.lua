@@ -268,6 +268,15 @@ function Roids.ValidateCreatureType(creatureType, target)
     return creatureType == targetType or creatureType == englishType;
 end
 
+-- Checks whether the given playerClass is the same as the target player's class type
+-- playerClass: The class to check
+-- target: The target's unitID
+-- returns: True or false
+function Roids.ValidatePlayerClass(playerClass, target)
+    local localizedClass, englishClass = UnitClass(target);
+    return playerClass == localizedClass or playerClass == englishClass;
+end
+
 -- Returns the cooldown of the given spellName or nil if no such spell was found
 function Roids.GetSpellCooldownByName(spellName)
     local checkFor = function(bookType)
@@ -491,6 +500,10 @@ Roids.Keywords = {
     
     type = function(conditionals)
         return Roids.ValidateCreatureType(conditionals.type, conditionals.target);
+    end,
+
+    class = function(conditionals)
+        return Roids.ValidatePlayerClass(conditionals.class, conditionals.target);
     end,
     
     cooldown = function(conditionals)
